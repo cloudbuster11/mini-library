@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var _a, _b;
+var _a, _b, _c;
 import { renderAllBooks, renderBookInfo } from './modules/display.js';
 const BASE_URL = 'https://my-json-server.typicode.com/zocom-christoffer-wallenberg/books-api/books';
 let allBooks = [];
@@ -27,15 +27,39 @@ function getBooks() {
     });
 }
 getBooks();
+// Visar info om boken
 (_a = document.querySelector('.books__container')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', (e) => {
     const target = e.target.closest('.book--small');
+    if (!target)
+        return;
+    if (!target.dataset.id)
+        return;
     const bookId = +target.dataset.id;
     console.log(bookId);
     overlay === null || overlay === void 0 ? void 0 : overlay.classList.toggle('hide');
     renderBookInfo(allBooks, bookId - 1);
 });
+//Stänger "fönsret" och tömmer elem.
 (_b = document.querySelector('.goback__btn')) === null || _b === void 0 ? void 0 : _b.addEventListener('click', () => {
-    var _a;
     overlay === null || overlay === void 0 ? void 0 : overlay.classList.toggle('hide');
-    (_a = document.querySelector('.choosen__book')) === null || _a === void 0 ? void 0 : _a.innerHTML = '';
+    document.querySelector('.choosen__book').innerHTML = '';
 });
+// Sök
+(_c = document.querySelector('.btn__search')) === null || _c === void 0 ? void 0 : _c.addEventListener('click', () => {
+    const inputElem = document.querySelector('.searchbar__inputfield');
+    if (!inputElem)
+        return;
+    const searchInput = inputElem.value;
+    console.log(searchInput);
+    const result = searchBook(searchInput, ['title', 'author']);
+    if (result.length === 0)
+        alert('No books found. Try again!');
+    else
+        renderAllBooks(result);
+});
+function searchBook(search, keys) {
+    const lowSearch = search.toLowerCase();
+    return allBooks.filter((books) => keys.some((key) => String(books[key])
+        .toLowerCase()
+        .includes(lowSearch)));
+}

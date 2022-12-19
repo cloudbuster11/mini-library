@@ -1,5 +1,6 @@
 export function renderAllBooks(books) {
     const booksContainer = document.querySelector('.books__container');
+    booksContainer.innerHTML = '';
     if (!booksContainer)
         return;
     books.forEach((book) => {

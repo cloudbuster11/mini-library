@@ -2,6 +2,7 @@ import { Book } from './interfaces';
 
 export function renderAllBooks(books: Book[]) {
   const booksContainer: HTMLElement | null = document.querySelector('.books__container');
+  booksContainer!.innerHTML = '';
   if (!booksContainer) return;
   books.forEach((book) => {
     const bookHtml: string = `<article class="book book--small book--bg" data-id="${book.id}">

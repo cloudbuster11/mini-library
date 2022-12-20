@@ -9,3 +9,7 @@ export interface Book {
   title: String;
   year: Number;
 }
+
+export interface Cart extends Book {
+  quantity: number;
+}

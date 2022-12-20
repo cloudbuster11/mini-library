@@ -29,7 +29,7 @@ export function renderBookInfo(books, bookId) {
   <p class="plot__text plot__pages">Pages: <span>${books[bookId].pages}</span></p>
   <p class="plot__text plot__publisher">Publisher: <span>${books[bookId].publisher}</span></p>
   </aside>
-  <button class="add__btn ${books[bookId].id}">Oh, I want to read it!</button>
+  <button class="add__btn" data-id="${books[bookId].id}">Oh, I want to read it!</button>
 </section>
 `;
     choosenBookElem.insertAdjacentHTML('beforeend', bookInfoHtml);

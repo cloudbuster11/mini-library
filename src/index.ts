@@ -1,8 +1,9 @@
-import { Book } from './modules/interfaces.js';
+import { Book, Cart } from './modules/interfaces.js';
 import { renderAllBooks, renderBookInfo } from './modules/display.js';
 
 const BASE_URL: string = 'https://my-json-server.typicode.com/zocom-christoffer-wallenberg/books-api/books';
 let allBooks: Book[] = [];
+let cart: Cart[] = [];
 const overlay = document.querySelector('.overlay');
 
 async function getBooks() {
@@ -30,12 +31,14 @@ document.querySelector('.books__container')?.addEventListener('click', (e) => {
 
   console.log(bookId);
   overlay?.classList.toggle('hide');
+  document.querySelector('.link')?.classList.toggle('white');
   renderBookInfo(allBooks, bookId - 1);
 });
 
 //Stänger "fönsret" och tömmer elem.
 document.querySelector('.goback__btn')?.addEventListener('click', () => {
   overlay?.classList.toggle('hide');
+  document.querySelector('.link')?.classList.toggle('white');
   document.querySelector('.choosen__book')!.innerHTML = '';
 });
 
@@ -60,3 +63,64 @@ function searchBook(search: string, keys: string[]) {
     )
   );
 }
+
+// Cart
+
+document.querySelector('.choosen__book')?.addEventListener('click', (e) => {
+  const target: HTMLElement | null = (e.target as Element).closest('.add__btn');
+  if (!target) return;
+  if (!target.dataset.id) return;
+  const bookId: number | undefined = +target.dataset.id;
+  addToCart(allBooks[bookId - 1], target);
+  listProductsInCart();
+  updateCart();
+});
+
+function addToCart(book: Book, button) {
+  let newCartObj: Cart = {
+    ...book,
+    quantity: 1,
+  };
+
+  if (cart.some((book) => book.id === newCartObj.id)) alert('The books is already in the cart.');
+  else {
+    cart.push(newCartObj);
+    button.textContent = 'Added';
+    console.log(cart);
+  }
+}
+
+function listProductsInCart() {
+  let cartProducts = '';
+  for (let i = 0; i < cart.length; i++) {
+    cartProducts += `
+    <section class="item__container">
+    <aside class="list__item">
+    <li><span class="product__title">Titel: </span>${cart[i].title} 
+    </li>
+    <li><span class="product__author">Author: </span>${cart[i].author} 
+    </li></aside><button class="btn__remove" id="${[i]}">X</button></section>
+    `;
+  }
+  document.getElementById('products').innerHTML = cartProducts;
+}
+
+document.getElementById('open-cart').addEventListener('click', function () {
+  document.getElementById('cart').classList.toggle('hide');
+  // listProductsInCart();
+  // updateCart();
+});
+
+function updateCart() {
+  document.getElementById('productsInCart').innerHTML = cart.length;
+}
+
+document.querySelector('#products').addEventListener('click', function (e) {
+  console.log(e.target.id);
+  if (e.target.classList.contains('btn__remove')) {
+    let pressedRemoveBtn = e.target.id;
+    cart.splice(pressedRemoveBtn, 1);
+    updateCart();
+    listProductsInCart();
+  }
+});

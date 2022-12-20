@@ -1,5 +1,7 @@
 import { Book, Cart } from './modules/interfaces.js';
 import { renderAllBooks, renderBookInfo } from './modules/display.js';
+import { addToCart, listProductsInCart, updateCart } from './modules/cart.js';
+import { searchBook } from './modules/searchBook.js';
 
 const BASE_URL: string = 'https://my-json-server.typicode.com/zocom-christoffer-wallenberg/books-api/books';
 let allBooks: Book[] = [];
@@ -29,13 +31,12 @@ document.querySelector('.books__container')?.addEventListener('click', (e) => {
   if (!target.dataset.id) return;
   const bookId: number | undefined = +target.dataset.id;
 
-  console.log(bookId);
   overlay?.classList.toggle('hide');
   document.querySelector('.link')?.classList.toggle('white');
   renderBookInfo(allBooks, bookId - 1);
 });
 
-//Stänger "fönsret" och tömmer elem.
+//Stänger "fönstret" och tömmer elem.
 document.querySelector('.goback__btn')?.addEventListener('click', () => {
   overlay?.classList.toggle('hide');
   document.querySelector('.link')?.classList.toggle('white');
@@ -47,80 +48,33 @@ document.querySelector('.btn__search')?.addEventListener('click', () => {
   const inputElem: HTMLInputElement | null = document.querySelector('.searchbar__inputfield');
   if (!inputElem) return;
   const searchInput: string | null = inputElem.value;
-  console.log(searchInput);
-  const result: Book[] = searchBook(searchInput, ['title', 'author']);
+  const result: Book[] = searchBook(allBooks, searchInput, ['title', 'author']);
   if (result.length === 0) alert('No books found. Try again!');
   else renderAllBooks(result);
 });
 
-function searchBook(search: string, keys: string[]) {
-  const lowSearch = search.toLowerCase();
-  return allBooks.filter((books) =>
-    keys.some((key) =>
-      String(books[key as keyof Book])
-        .toLowerCase()
-        .includes(lowSearch)
-    )
-  );
-}
-
 // Cart
-
 document.querySelector('.choosen__book')?.addEventListener('click', (e) => {
   const target: HTMLElement | null = (e.target as Element).closest('.add__btn');
   if (!target) return;
   if (!target.dataset.id) return;
   const bookId: number | undefined = +target.dataset.id;
-  addToCart(allBooks[bookId - 1], target);
-  listProductsInCart();
-  updateCart();
+
+  addToCart(allBooks[bookId - 1], target, cart);
+  listProductsInCart(cart);
+  updateCart(cart);
 });
 
-function addToCart(book: Book, button) {
-  let newCartObj: Cart = {
-    ...book,
-    quantity: 1,
-  };
-
-  if (cart.some((book) => book.id === newCartObj.id)) alert('The books is already in the cart.');
-  else {
-    cart.push(newCartObj);
-    button.textContent = 'Added';
-    console.log(cart);
-  }
-}
-
-function listProductsInCart() {
-  let cartProducts = '';
-  for (let i = 0; i < cart.length; i++) {
-    cartProducts += `
-    <section class="item__container">
-    <aside class="list__item">
-    <li><span class="product__title">Titel: </span>${cart[i].title} 
-    </li>
-    <li><span class="product__author">Author: </span>${cart[i].author} 
-    </li></aside><button class="btn__remove" id="${[i]}">X</button></section>
-    `;
-  }
-  document.getElementById('products').innerHTML = cartProducts;
-}
-
-document.getElementById('open-cart').addEventListener('click', function () {
-  document.getElementById('cart').classList.toggle('hide');
-  // listProductsInCart();
-  // updateCart();
+document.getElementById('open-cart')!.addEventListener('click', function () {
+  document.getElementById('cart')!.classList.toggle('hide');
 });
 
-function updateCart() {
-  document.getElementById('productsInCart').innerHTML = cart.length;
-}
-
-document.querySelector('#products').addEventListener('click', function (e) {
-  console.log(e.target.id);
-  if (e.target.classList.contains('btn__remove')) {
-    let pressedRemoveBtn = e.target.id;
-    cart.splice(pressedRemoveBtn, 1);
-    updateCart();
-    listProductsInCart();
+document.querySelector('#products')!.addEventListener('click', function (e) {
+  const removeBtn = e.target as Element;
+  if (removeBtn.classList.contains('btn__remove')) {
+    let clickedBtnId: number = +removeBtn.id;
+    cart.splice(clickedBtnId, 1);
+    updateCart(cart);
+    listProductsInCart(cart);
   }
 });

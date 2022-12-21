@@ -9,8 +9,7 @@ export function addToCart(book: Book, button: HTMLElement, cart: Cart[]): void {
   if (cart.some((book) => book.id === newCartObj.id)) alert('This book is already in the cart.');
   else {
     cart.push(newCartObj);
-    button.textContent = 'Added';
-    console.log(cart);
+    button.textContent = 'Added to cart.';
   }
 }
 

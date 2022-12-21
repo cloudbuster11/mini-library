@@ -4,8 +4,7 @@ export function addToCart(book, button, cart) {
         alert('This book is already in the cart.');
     else {
         cart.push(newCartObj);
-        button.textContent = 'Added';
-        console.log(cart);
+        button.textContent = 'Added to cart.';
     }
 }
 export function listProductsInCart(cart) {

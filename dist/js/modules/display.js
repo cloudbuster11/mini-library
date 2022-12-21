@@ -13,7 +13,6 @@ export function renderAllBooks(books) {
         if (!renderedBook)
             return;
         renderedBook.style.backgroundColor = `${book.color}`;
-        // console.log(renderedBook);
     });
 }
 export function renderBookInfo(books, bookId) {

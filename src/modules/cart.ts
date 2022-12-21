@@ -1,6 +1,6 @@
 import { Book, Cart } from './interfaces';
 
-export function addToCart(book: Book, button: HTMLElement, cart: Cart[]) {
+export function addToCart(book: Book, button: HTMLElement, cart: Cart[]): void {
   let newCartObj: Cart = {
     ...book,
     quantity: 1,
@@ -14,8 +14,9 @@ export function addToCart(book: Book, button: HTMLElement, cart: Cart[]) {
   }
 }
 
-export function listProductsInCart(cart: Cart[]) {
+export function listProductsInCart(cart: Cart[]): void {
   let cartProducts = '';
+  document.querySelector('#cart__empty')?.classList.add('hide');
   for (let i = 0; i < cart.length; i++) {
     cartProducts += `
     <section class="item__container">
@@ -27,6 +28,10 @@ export function listProductsInCart(cart: Cart[]) {
     `;
   }
   document.getElementById('products')!.innerHTML = cartProducts;
+
+  if (cart.length == 0) {
+    document.querySelector('#cart__empty')?.classList.remove('hide');
+  }
 }
 
 export function updateCart(cart: Cart[]) {

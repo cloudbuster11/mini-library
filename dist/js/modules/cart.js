@@ -9,7 +9,9 @@ export function addToCart(book, button, cart) {
     }
 }
 export function listProductsInCart(cart) {
+    var _a, _b;
     let cartProducts = '';
+    (_a = document.querySelector('#cart__empty')) === null || _a === void 0 ? void 0 : _a.classList.add('hide');
     for (let i = 0; i < cart.length; i++) {
         cartProducts += `
     <section class="item__container">
@@ -21,6 +23,9 @@ export function listProductsInCart(cart) {
     `;
     }
     document.getElementById('products').innerHTML = cartProducts;
+    if (cart.length == 0) {
+        (_b = document.querySelector('#cart__empty')) === null || _b === void 0 ? void 0 : _b.classList.remove('hide');
+    }
 }
 export function updateCart(cart) {
     document.getElementById('productsInCart').innerHTML = String(cart.length);

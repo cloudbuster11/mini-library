@@ -1,7 +1,7 @@
 import { Book, Cart } from './modules/interfaces.js';
 import { renderAllBooks, renderBookInfo } from './modules/display.js';
 import { addToCart, listProductsInCart, updateCart } from './modules/cart.js';
-import { searchBook } from './modules/searchBook.js';
+import { handleSearch } from './modules/searchBook.js';
 
 const BASE_URL: string = 'https://my-json-server.typicode.com/zocom-christoffer-wallenberg/books-api/books';
 let allBooks: Book[] = [];
@@ -16,7 +16,6 @@ async function getBooks() {
   if (response.status !== 200) {
     console.log(response.status);
   } else {
-    console.log(data);
     allBooks = data;
     renderAllBooks(data);
   }
@@ -24,6 +23,7 @@ async function getBooks() {
 
 getBooks();
 
+// Eventlistners
 // Visar info om boken
 document.querySelector('.books__container')?.addEventListener('click', (e) => {
   const target: HTMLElement | null = (e.target as Element).closest('.book--small');
@@ -32,25 +32,25 @@ document.querySelector('.books__container')?.addEventListener('click', (e) => {
   const bookId: number | undefined = +target.dataset.id;
 
   overlay?.classList.toggle('hide');
-  document.querySelector('.link')?.classList.toggle('white');
+  document.querySelector('.cart__link')?.classList.toggle('white');
   renderBookInfo(allBooks, bookId - 1);
 });
 
-//Stänger "fönstret" och tömmer elem.
+//Stänger overlay
 document.querySelector('.goback__btn')?.addEventListener('click', () => {
   overlay?.classList.toggle('hide');
-  document.querySelector('.link')?.classList.toggle('white');
+  document.querySelector('.cart__link')?.classList.toggle('white');
   document.querySelector('.choosen__book')!.innerHTML = '';
 });
 
-// Sök
+// Sökfunktionen
 document.querySelector('.btn__search')?.addEventListener('click', () => {
-  const inputElem: HTMLInputElement | null = document.querySelector('.searchbar__inputfield');
-  if (!inputElem) return;
-  const searchInput: string | null = inputElem.value;
-  const result: Book[] = searchBook(allBooks, searchInput, ['title', 'author']);
-  if (result.length === 0) alert('No books found. Try again!');
-  else renderAllBooks(result);
+  handleSearch(allBooks, renderAllBooks);
+});
+
+document.querySelector('.searchbar__inputfield')?.addEventListener('keyup', (e) => {
+  const target = <KeyboardEvent>e;
+  if (target.key === 'Enter') handleSearch(allBooks, renderAllBooks);
 });
 
 // Cart
@@ -74,7 +74,7 @@ document.querySelector('#products')!.addEventListener('click', function (e) {
   if (removeBtn.classList.contains('btn__remove')) {
     let clickedBtnId: number = +removeBtn.id;
     cart.splice(clickedBtnId, 1);
-    updateCart(cart);
     listProductsInCart(cart);
+    updateCart(cart);
   }
 });

@@ -1,6 +1,6 @@
 import { Book } from './interfaces';
 
-export function renderAllBooks(books: Book[]) {
+export function renderAllBooks(books: Book[]): void {
   const booksContainer: HTMLElement | null = document.querySelector('.books__container');
   booksContainer!.innerHTML = '';
   if (!booksContainer) return;
@@ -15,11 +15,10 @@ export function renderAllBooks(books: Book[]) {
 
     if (!renderedBook) return;
     renderedBook.style.backgroundColor = `${book.color}`;
-    // console.log(renderedBook);
   });
 }
 
-export function renderBookInfo(books: Book[], bookId: number) {
+export function renderBookInfo(books: Book[], bookId: number): void {
   const choosenBookElem: HTMLElement | null = document.querySelector('.choosen__book');
   if (!choosenBookElem) return;
   const bookInfoHtml: string = `<section class="book book--bg book--large book--${books[bookId].id}--large">
@@ -42,6 +41,7 @@ export function renderBookInfo(books: Book[], bookId: number) {
 
   choosenBookElem.insertAdjacentHTML('beforeend', bookInfoHtml);
   const renderedBook: HTMLElement | null = document.querySelector(`.book--${books[bookId].id}--large`);
+
   if (!renderedBook) return;
   renderedBook.style.backgroundColor = `${books[bookId].color}`;
 }

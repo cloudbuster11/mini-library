@@ -34,9 +34,17 @@ export function renderBookInfo(books: Book[], bookId: number): void {
   <p class="plot__text plot__published">First published: <span>${books[bookId].year}</span></p>
   <p class="plot__text plot__pages">Pages: <span>${books[bookId].pages}</span></p>
   <p class="plot__text plot__publisher">Publisher: <span>${books[bookId].publisher}</span></p>
-  </aside>
+</aside>
   <button class="add__btn" data-id="${books[bookId].id}">Oh, I want to read it!</button>
-</section>
+  <label for="cart__quantity">Qty:</label>
+  <select type="number" placeholder="Qty:"  class="cart__quantity"">Qty:
+  <option value="1">1</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
+  <option value="4">4</option>
+  <option value="5">5</option>
+  </select>
+  </section>
 `;
 
   choosenBookElem.insertAdjacentHTML('beforeend', bookInfoHtml);

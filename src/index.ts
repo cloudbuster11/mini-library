@@ -24,7 +24,7 @@ async function getBooks() {
 getBooks();
 
 // Eventlistners
-// Visar info om boken
+// Visar overlay och bokinfo.
 document.querySelector('.books__container')?.addEventListener('click', (e) => {
   const target: HTMLElement | null = (e.target as Element).closest('.book--small');
   if (!target) return;
@@ -60,11 +60,13 @@ document.querySelector('.searchbar__inputfield')?.addEventListener('keyup', (e) 
 // Cart
 document.querySelector('.choosen__book')?.addEventListener('click', (e) => {
   const target: HTMLElement | null = (e.target as Element).closest('.add__btn');
+  const quantity: number = +(<HTMLInputElement>document.querySelector('.cart__quantity')).value;
+
   if (!target) return;
   if (!target.dataset.id) return;
   const bookId: number | undefined = +target.dataset.id;
 
-  addToCart(allBooks[bookId - 1], target, cart);
+  addToCart(allBooks[bookId - 1], quantity, target, cart);
   listProductsInCart(cart);
   updateCart(cart);
 });

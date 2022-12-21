@@ -1,5 +1,5 @@
-export function addToCart(book, button, cart) {
-    let newCartObj = Object.assign(Object.assign({}, book), { quantity: 1 });
+export function addToCart(book, quantity, button, cart) {
+    let newCartObj = Object.assign(Object.assign({}, book), { quantity: quantity });
     if (cart.some((book) => book.id === newCartObj.id))
         alert('This book is already in the cart.');
     else {
@@ -18,7 +18,7 @@ export function listProductsInCart(cart) {
     <li><span class="product__title">Titel: </span>${cart[i].title} 
     </li>
     <li><span class="product__author">Author: </span>${cart[i].author} 
-    </li></aside><button class="btn__remove" id="${[i]}">Remove</button></section>
+    </li></aside><p class="product__quantity">${cart[i].quantity}<span>X</span></p><button class="btn__remove" id="${[i]}">Remove</button></section>
     `;
     }
     document.getElementById('products').innerHTML = cartProducts;
@@ -27,5 +27,9 @@ export function listProductsInCart(cart) {
     }
 }
 export function updateCart(cart) {
-    document.getElementById('productsInCart').innerHTML = String(cart.length);
+    const bookQuantity = cart.map(function (book) {
+        return book.quantity;
+    });
+    const itemsInCart = bookQuantity.reduce((partialSum, a) => partialSum + a, 0);
+    document.getElementById('productsInCart').innerHTML = String(itemsInCart);
 }

@@ -1,9 +1,9 @@
 import { Book, Cart } from './interfaces';
 
-export function addToCart(book: Book, button: HTMLElement, cart: Cart[]): void {
+export function addToCart(book: Book, quantity: number, button: HTMLElement, cart: Cart[]): void {
   let newCartObj: Cart = {
     ...book,
-    quantity: 1,
+    quantity: quantity,
   };
 
   if (cart.some((book) => book.id === newCartObj.id)) alert('This book is already in the cart.');
@@ -23,7 +23,9 @@ export function listProductsInCart(cart: Cart[]): void {
     <li><span class="product__title">Titel: </span>${cart[i].title} 
     </li>
     <li><span class="product__author">Author: </span>${cart[i].author} 
-    </li></aside><button class="btn__remove" id="${[i]}">Remove</button></section>
+    </li></aside><p class="product__quantity">${
+      cart[i].quantity
+    }<span>X</span></p><button class="btn__remove" id="${[i]}">Remove</button></section>
     `;
   }
   document.getElementById('products')!.innerHTML = cartProducts;
@@ -34,5 +36,11 @@ export function listProductsInCart(cart: Cart[]): void {
 }
 
 export function updateCart(cart: Cart[]) {
-  document.getElementById('productsInCart')!.innerHTML = String(cart.length);
+  const bookQuantity = cart.map(function (book) {
+    return book.quantity;
+  });
+
+  const itemsInCart = bookQuantity.reduce((partialSum, a) => partialSum + a, 0);
+
+  document.getElementById('productsInCart')!.innerHTML = String(itemsInCart);
 }

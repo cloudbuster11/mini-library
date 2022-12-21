@@ -30,7 +30,7 @@ function getBooks() {
 }
 getBooks();
 // Eventlistners
-// Visar info om boken
+// Visar overlay och bokinfo.
 (_a = document.querySelector('.books__container')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', (e) => {
     var _a;
     const target = e.target.closest('.book--small');
@@ -65,12 +65,13 @@ getBooks();
 // Cart
 (_f = document.querySelector('.choosen__book')) === null || _f === void 0 ? void 0 : _f.addEventListener('click', (e) => {
     const target = e.target.closest('.add__btn');
+    const quantity = +document.querySelector('.cart__quantity').value;
     if (!target)
         return;
     if (!target.dataset.id)
         return;
     const bookId = +target.dataset.id;
-    addToCart(allBooks[bookId - 1], target, cart);
+    addToCart(allBooks[bookId - 1], quantity, target, cart);
     listProductsInCart(cart);
     updateCart(cart);
 });

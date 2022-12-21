@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var _a, _b, _c, _d, _e;
+var _a, _b, _c, _d, _e, _f;
 import { renderAllBooks, renderBookInfo } from './modules/display.js';
 import { addToCart, listProductsInCart, updateCart } from './modules/cart.js';
 import { handleSearch } from './modules/searchBook.js';
@@ -43,24 +43,27 @@ getBooks();
     (_a = document.querySelector('.cart__link')) === null || _a === void 0 ? void 0 : _a.classList.toggle('white');
     renderBookInfo(allBooks, bookId - 1);
 });
+(_b = document.querySelector('#btn__allbooks')) === null || _b === void 0 ? void 0 : _b.addEventListener('click', () => {
+    getBooks();
+});
 //Stänger overlay
-(_b = document.querySelector('.goback__btn')) === null || _b === void 0 ? void 0 : _b.addEventListener('click', () => {
+(_c = document.querySelector('.goback__btn')) === null || _c === void 0 ? void 0 : _c.addEventListener('click', () => {
     var _a;
     overlay === null || overlay === void 0 ? void 0 : overlay.classList.toggle('hide');
     (_a = document.querySelector('.cart__link')) === null || _a === void 0 ? void 0 : _a.classList.toggle('white');
     document.querySelector('.choosen__book').innerHTML = '';
 });
 // Sökfunktionen
-(_c = document.querySelector('.btn__search')) === null || _c === void 0 ? void 0 : _c.addEventListener('click', () => {
+(_d = document.querySelector('.btn__search')) === null || _d === void 0 ? void 0 : _d.addEventListener('click', () => {
     handleSearch(allBooks, renderAllBooks);
 });
-(_d = document.querySelector('.searchbar__inputfield')) === null || _d === void 0 ? void 0 : _d.addEventListener('keyup', (e) => {
+(_e = document.querySelector('.searchbar__inputfield')) === null || _e === void 0 ? void 0 : _e.addEventListener('keyup', (e) => {
     const target = e;
     if (target.key === 'Enter')
         handleSearch(allBooks, renderAllBooks);
 });
 // Cart
-(_e = document.querySelector('.choosen__book')) === null || _e === void 0 ? void 0 : _e.addEventListener('click', (e) => {
+(_f = document.querySelector('.choosen__book')) === null || _f === void 0 ? void 0 : _f.addEventListener('click', (e) => {
     const target = e.target.closest('.add__btn');
     if (!target)
         return;

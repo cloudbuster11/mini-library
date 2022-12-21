@@ -36,6 +36,10 @@ document.querySelector('.books__container')?.addEventListener('click', (e) => {
   renderBookInfo(allBooks, bookId - 1);
 });
 
+document.querySelector('#btn__allbooks')?.addEventListener('click', () => {
+  getBooks();
+});
+
 //Stänger overlay
 document.querySelector('.goback__btn')?.addEventListener('click', () => {
   overlay?.classList.toggle('hide');

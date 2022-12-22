@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var _a, _b, _c, _d, _e, _f;
+var _a, _b, _c, _d, _e, _f, _g;
 import { renderAllBooks, renderBookInfo } from './modules/display.js';
 import { addToCart, listProductsInCart, updateCart } from './modules/cart.js';
 import { handleSearch } from './modules/searchBook.js';
@@ -47,7 +47,7 @@ getBooks();
     getBooks();
 });
 //Stänger overlay
-(_c = document.querySelector('.goback__btn')) === null || _c === void 0 ? void 0 : _c.addEventListener('click', () => {
+(_c = document.querySelector('.btn__goback')) === null || _c === void 0 ? void 0 : _c.addEventListener('click', () => {
     var _a;
     overlay === null || overlay === void 0 ? void 0 : overlay.classList.toggle('hide');
     (_a = document.querySelector('.cart__link')) === null || _a === void 0 ? void 0 : _a.classList.toggle('white');
@@ -62,7 +62,7 @@ getBooks();
     if (target.key === 'Enter')
         handleSearch(allBooks, renderAllBooks);
 });
-// Cart
+// Cartfunktionen
 (_f = document.querySelector('.choosen__book')) === null || _f === void 0 ? void 0 : _f.addEventListener('click', (e) => {
     const target = e.target.closest('.add__btn');
     const quantity = +document.querySelector('.cart__quantity').value;
@@ -80,10 +80,13 @@ document.getElementById('open-cart').addEventListener('click', function () {
 });
 document.querySelector('#products').addEventListener('click', function (e) {
     const removeBtn = e.target;
-    if (removeBtn.classList.contains('btn__remove')) {
+    if (removeBtn.classList.contains('btn__cart--remove')) {
         let clickedBtnId = +removeBtn.id;
         cart.splice(clickedBtnId, 1);
         listProductsInCart(cart);
         updateCart(cart);
     }
+});
+(_g = document.querySelector('.btn__cart--checkout')) === null || _g === void 0 ? void 0 : _g.addEventListener('click', () => {
+    alert('Thank you for your order!');
 });

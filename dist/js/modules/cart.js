@@ -18,7 +18,7 @@ export function listProductsInCart(cart) {
     <li><span class="product__title">Titel: </span>${cart[i].title} 
     </li>
     <li><span class="product__author">Author: </span>${cart[i].author} 
-    </li></aside><p class="product__quantity">${cart[i].quantity}<span>X</span></p><button class="btn__remove" id="${[i]}">Remove</button></section>
+    </li></aside><p class="product__quantity">${cart[i].quantity}<span>x</span></p><button class="btn__cart btn__cart--remove" id="${[i]}">Remove</button></section>
     `;
     }
     document.getElementById('products').innerHTML = cartProducts;

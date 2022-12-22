@@ -10,7 +10,6 @@ const overlay = document.querySelector('.overlay');
 
 async function getBooks() {
   const response = await fetch(`${BASE_URL}/`);
-
   let data: Book[] = await response.json();
 
   if (response.status !== 200) {
@@ -41,7 +40,7 @@ document.querySelector('#btn__allbooks')?.addEventListener('click', () => {
 });
 
 //Stänger overlay
-document.querySelector('.goback__btn')?.addEventListener('click', () => {
+document.querySelector('.btn__goback')?.addEventListener('click', () => {
   overlay?.classList.toggle('hide');
   document.querySelector('.cart__link')?.classList.toggle('white');
   document.querySelector('.choosen__book')!.innerHTML = '';
@@ -57,7 +56,7 @@ document.querySelector('.searchbar__inputfield')?.addEventListener('keyup', (e) 
   if (target.key === 'Enter') handleSearch(allBooks, renderAllBooks);
 });
 
-// Cart
+// Cartfunktionen
 document.querySelector('.choosen__book')?.addEventListener('click', (e) => {
   const target: HTMLElement | null = (e.target as Element).closest('.add__btn');
   const quantity: number = +(<HTMLInputElement>document.querySelector('.cart__quantity')).value;
@@ -77,10 +76,14 @@ document.getElementById('open-cart')!.addEventListener('click', function () {
 
 document.querySelector('#products')!.addEventListener('click', function (e) {
   const removeBtn = e.target as Element;
-  if (removeBtn.classList.contains('btn__remove')) {
+  if (removeBtn.classList.contains('btn__cart--remove')) {
     let clickedBtnId: number = +removeBtn.id;
     cart.splice(clickedBtnId, 1);
     listProductsInCart(cart);
     updateCart(cart);
   }
+});
+
+document.querySelector('.btn__cart--checkout')?.addEventListener('click', () => {
+  alert('Thank you for your order!');
 });

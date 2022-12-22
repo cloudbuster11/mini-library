@@ -37,15 +37,14 @@ body {
   justify-content: center;
 }
 
-/* Searchbar */
+/* Navbar */
+
 .searchbar {
   margin-bottom: 1rem;
   padding-top: 1rem;
   display: flex;
   flex-direction: row;
-  /* justify-content: space-between; */
   z-index: 99;
-  /* Ny */
 }
 
 .searchbar__inputfield {
@@ -53,10 +52,7 @@ body {
   width: 300px;
   height: 35px;
   padding: 10px 35px 10px 15px;
-  /* border: none; */
   border-radius: 100px;
-  /* outline: none; */
-  /* box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.1); */
   border: 1px solid #e7eaef;
   background-color: #f5f5f5;
 }
@@ -129,7 +125,7 @@ body {
   pointer-events: none;
 }
 
-/* Choosen Book Info */
+/* Book Info */
 
 .overlay {
   width: 100vw;
@@ -234,7 +230,7 @@ label {
   pointer-events: none;
 }
 
-.goback__btn {
+.btn__goback {
   margin-bottom: 2rem;
   border: none;
   background: rgba(255, 255, 255, 0.7);
@@ -253,22 +249,15 @@ label {
   flex-direction: row-reverse;
 }
 
-.btn__remove {
-  grid-area: remove;
-  align-self: center;
-  height: 20px;
-  width: 60px;
-  font-size: 0.6rem;
+.btn__cart {
+  color: #fff;
   font-family: 'Raleway', sans-serif;
   text-transform: uppercase;
-  color: #fff;
-  /* background-color: #393939; */
   background-color: #43d9a3;
-  margin-right: 0.7rem;
-  border-radius: 999rem;
-  border: none;
   cursor: pointer;
   box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 999rem;
+  border: none;
 }
 
 .cart-total {
@@ -287,6 +276,7 @@ label {
 
 .cart-wrapper {
   width: 350px;
+  padding: 0.7rem;
   background-color: #fffffe;
   font-family: 'Raleway', sans-serif;
   position: absolute;
@@ -300,23 +290,20 @@ label {
 
 #cart__empty {
   color: #000;
-  margin: 0rem 0rem 0.7rem 0.7rem;
+  margin-bottom: 0.7rem;
 }
 
 .cart__added {
+  margin-bottom: 0.5rem;
   font-size: 1rem;
-  margin: 0.7rem 0rem 0.5rem 0.7rem;
   color: #000;
   letter-spacing: 0.1rem;
 }
 
 .item__container {
-  /* width: 300px; */
   margin-bottom: 0.7rem;
-  padding: 0 0 0.5rem 0.7rem;
+  padding-bottom: 0.5rem;
   border-bottom: 1px solid #e6e6e6;
-  /* display: flex;
-  justify-content: space-between; */
   display: grid;
   grid-template-columns: 25px 240px 60px;
   grid-template-areas: 'quant item remove';
@@ -346,9 +333,23 @@ li {
   align-self: center;
   color: #84788d;
   letter-spacing: 0.2rem;
+  font-style: italic;
 }
 
-/* Modifiers */
+.btn__cart--remove {
+  grid-area: remove;
+  align-self: center;
+  height: 20px;
+  width: 60px;
+  font-size: 0.6rem;
+}
+
+.btn__cart--checkout {
+  width: 330px;
+  height: 30px;
+  align-self: center;
+}
+
 .book--bg {
   background: linear-gradient(208.29deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 92.13%);
 }

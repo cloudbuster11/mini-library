@@ -88,5 +88,8 @@ document.querySelector('#products').addEventListener('click', function (e) {
     }
 });
 (_g = document.querySelector('.btn__cart--checkout')) === null || _g === void 0 ? void 0 : _g.addEventListener('click', () => {
-    alert('Thank you for your order!');
+    if (cart.length == 0)
+        alert('No products in the cart yet.');
+    else
+        alert('Thank you for your order!');
 });
